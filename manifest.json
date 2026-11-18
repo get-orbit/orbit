@@ -3,7 +3,7 @@
   "name": "ORBIT",
   "version": "0.2.0",
   "description": "A new way to interact with the web.",
-  "permissions": ["clipboardWrite"],
+  "permissions": ["clipboardWrite", "storage"],
   "background": {
     "service_worker": "src/background/service-worker.js"
   },
