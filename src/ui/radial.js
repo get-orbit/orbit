@@ -204,11 +204,6 @@
       button.addEventListener("click", async () => {
         if (button.disabled) return;
 
-        if (action.id === "more") {
-          hint.textContent = "MORE ACTIONS WILL APPEAR HERE";
-          return;
-        }
-
         button.disabled = true;
         hint.textContent = "WORKING";
         try {
