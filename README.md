@@ -6,14 +6,15 @@ ORBIT is an experimental, context-aware interaction layer for Chrome. It brings 
 
 ## Project status
 
-Early development. Version 0.2.0 introduces the first multi-action radial interface for selected text.
+Early development. Version 0.3.0 adds a local Saved Passages Quick Panel to the selected-text radial interface.
 
 1. Select text on a webpage.
 2. Open ORBIT with `Alt + Shift + O`.
-3. Choose **Copy** or **Search** from the radial interface.
-4. ORBIT performs the selected action.
+3. Choose **Copy**, **Search**, or **Save** from the radial interface.
+4. Choose **More** to open the Saved Passages Quick Panel.
+5. In the panel, search saved passages, copy them, open their source pages, or delete them.
 
-Translate, Save, Explain, and Define are visible previews and are not functional yet. More is a placeholder for future actions. The extension is an experimental prototype, not a feature-complete release.
+Translate, Explain, and Define are visible previews and are not functional yet. The extension is an experimental prototype, not a feature-complete release.
 
 ## Principles
 
@@ -48,7 +49,8 @@ The prototype requests `Alt + Shift + O`. Chrome lets you review or change exten
 
 - ORBIT cannot run on some Chrome-internal pages or other restricted browser surfaces.
 - The initial prototype recognizes selected text only.
-- Translate, Save, Explain, and Define are placeholders.
+- The Quick Panel currently manages saved passages only; broader command search and customization are planned.
+- Translate, Explain, and Define are placeholders.
 - The first release is intended for local testing, not public distribution.
 
 ## Project structure
@@ -62,11 +64,12 @@ src/
     content.js
   ui/
     radial.js
+    quick-panel.js
 ```
 
 ## Privacy
 
-The prototype processes the current text selection locally. Search opens a Google results page using that selection. ORBIT does not send page content to its own server or use an AI service.
+The prototype processes the current text selection locally. Saved passages are stored in Chrome local storage. Search opens a Google results page using the selected text. ORBIT does not send page content to its own server or use an AI service.
 
 ## License
 
