@@ -1,8 +1,8 @@
 /**
  * ORBIT content entry point.
  *
- * Detects the current text selection and delegates rendering and command
- * execution to the radial interface.
+ * Detects the current text selection and supplies context-specific actions
+ * to the radial interface.
  */
 (() => {
   if (window.__orbitInitialized) return;
@@ -36,15 +36,57 @@
     activeMenu = window.ORBITRadial.create({
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2,
+      contextLabel: "TEXT",
       actions: [
         {
           id: "copy-text",
           label: "Copy",
-          description: "Copy selected text",
+          description: "Copy the selected text",
           run: async () => {
             await navigator.clipboard.writeText(selectedText);
             return "COPIED";
           }
+        },
+        {
+          id: "search-text",
+          label: "Search",
+          description: "Search the web for the selected text",
+          run: async () => {
+            const url = new URL("https://www.google.com/search");
+            url.searchParams.set("q", selectedText);
+            window.open(url.toString(), "_blank", "noopener");
+            return "SEARCH OPENED";
+          }
+        },
+        {
+          id: "translate-text",
+          label: "Translate",
+          disabled: true,
+          comingSoon: "TRANSLATE · COMING SOON"
+        },
+        {
+          id: "save-text",
+          label: "Save",
+          disabled: true,
+          comingSoon: "SAVE PASSAGE · COMING SOON"
+        },
+        {
+          id: "explain-text",
+          label: "Explain",
+          disabled: true,
+          comingSoon: "EXPLAIN · COMING SOON"
+        },
+        {
+          id: "define-text",
+          label: "Define",
+          disabled: true,
+          comingSoon: "DEFINE · COMING SOON"
+        },
+        {
+          id: "more",
+          label: "More",
+          description: "More actions",
+          run: async () => "MORE ACTIONS WILL APPEAR HERE"
         }
       ],
       onClose: () => {
