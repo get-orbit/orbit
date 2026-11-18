@@ -125,7 +125,11 @@
           id: "more",
           label: "More",
           description: "More actions",
-          run: async () => "MORE ACTIONS WILL APPEAR HERE"
+          run: async () => {
+            activeMenu?.close();
+            window.ORBITQuickPanel.create();
+            return "OPENING SAVED PASSAGES";
+          }
         }
       ],
       onClose: () => {
