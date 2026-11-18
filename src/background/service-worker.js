@@ -5,7 +5,9 @@
  * context detection and presentation; the service worker does not inspect
  * page content.
  */
+console.log("ORBIT service worker loaded");
 chrome.commands.onCommand.addListener(async (command) => {
+  console.log("ORBIT command received:", command);
   if (command !== "open-orbit") return;
 
   try {
