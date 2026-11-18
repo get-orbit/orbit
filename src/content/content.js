@@ -10,6 +10,43 @@
 
   let activeMenu = null;
 
+  async function savePassage(text) {
+    // 1. Retrieve existing passages
+    const result = await chrome.storage.local.get("savedPassages");
+  
+    // 2. Make sure we have an array
+    const passages = Array.isArray(result.savedPassages)
+      ? result.savedPassages
+      : [];
+  
+    // 3. Prevent duplicate saves
+    const alreadySaved = passages.some((passage) =>
+      passage.text === text && passage.url === window.location.href
+    );
+  
+    if (alreadySaved) {
+      return "ALREADY SAVED";
+    }
+  
+    // 4. Create the new passage
+    const passage = {
+      text: text,
+      url: window.location.href,
+      title: document.title,
+      savedAt: Date.now()
+    };
+  
+    // 5. Add it to the collection
+    passages.push(passage);
+  
+    // 6. Store the updated collection
+    await chrome.storage.local.set({
+      savedPassages: passages
+    });
+  
+    return "PASSAGE SAVED";
+  }
+
   chrome.runtime.onMessage.addListener((message) => {
     if (message?.type === "ORBIT_OPEN") {
       openOrbit();
@@ -67,8 +104,10 @@
         {
           id: "save-text",
           label: "Save",
-          disabled: true,
-          comingSoon: "SAVE PASSAGE · COMING SOON"
+          description: "Save the selected passage locally",
+          run: async () => {
+            return await savePassage(selectedText);
+          }
         },
         {
           id: "explain-text",
