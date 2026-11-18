@@ -26,3 +26,21 @@ chrome.commands.onCommand.addListener(async (command) => {
     // expected to reject messages. The page itself remains unaffected.
   }
 });
+
+
+/**
+ * Opens a saved source URL in a new tab.
+ * Only normal web pages are accepted.
+ */
+chrome.runtime.onMessage.addListener((message) => {
+  if (message?.type !== "ORBIT_OPEN_URL") return;
+
+  try {
+    const url = new URL(message.url);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return;
+
+    chrome.tabs.create({ url: url.toString() });
+  } catch {
+    // Ignore missing or invalid URLs.
+  }
+});
